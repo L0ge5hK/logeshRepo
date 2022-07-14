@@ -1,14 +1,17 @@
-trigger ContactHandle on Contact (after insert, after delete, after update, after undelete) 
+trigger ContactHandle on Contact (after insert, after delete, after update, after undelete, before insert) 
 {
-  
-        if(trigger.isAfter && trigger.isDelete)
-        {
-            System.debug('isafter and is delete runningg');
-            toDeleteandCount.deleteContacts(trigger.old);
-        }
-        if(trigger.isAfter && (trigger.isUndelete || trigger.isInsert || trigger.isUpdate /*|| trigger.isDelete*/))  
-        {
-            toCountAccContacts.countContacts(trigger.new);
-        }
-        
+
+    if(trigger.isBefore && (trigger.isInsert))
+    {
+        toCountAccContacts.forUpdateContacts(trigger.new);
+    }
+    if(trigger.isAfter && (trigger.isDelete || trigger.isUpdate))
+    {
+        toCountAccContacts.toDelete(trigger.old);
+    }
+    if(trigger.isAfter && (trigger.isUndelete || trigger.isInsert || trigger.isUpdate ))  
+    {
+        toCountAccContacts.countContacts(trigger.new);
+    }
+    
 }
