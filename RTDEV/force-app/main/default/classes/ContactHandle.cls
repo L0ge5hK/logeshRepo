@@ -1,17 +1,20 @@
 public with sharing class ContactHandle 
 {
         //-----------------------Method to Create Account List------------------------------------------
-        public static List<Account> createList(List<Contact> Li)
+        public static List<Account> createList(List<Contact> contactlist)
         {
             Set<ID> AccId=new Set<ID>(); //creating a set of ID named "AccId"
-            if(!Li.isEmpty())
+            if(!contactlist.isEmpty())
             {
-                for(Contact c:Li)
+                for(Contact c:contactlist)
                 {
                 AccId.add(c.accountId); //Adding accountId into Set AccId
                 }
             }
-            List<Account> ac= [SELECT Id,  Total_Contacts__c,(SELECT Id from Contacts)FROM Account WHERE Id IN : AccId]; //Creating List of Account
+            List<Account> ac= [SELECT Id,  Total_Contacts__c,(SELECT Id from Contacts)
+                                FROM Account 
+                                WHERE 
+                                Id IN : AccId]; //Creating List of Account
             return ac; //returning the created account list
         }
         //--------------------------Method for Insertion and Updation-------------------------------------
@@ -27,9 +30,9 @@ public static void newContact(List<Contact> newlist)
     update accounts; //update the list
 }
 //-------------------------------------------Method for Deletion---------------------------------------------------
-public static void toDeleteContact(List<Contact> newlist)	
+public static void toDeleteContact(List<Contact> oldlist)	
 {
-    List<Account> accounts= createList(newlist); //calling method "createList" to create a list of accounts
+    List<Account> accounts= createList(oldlist); //calling method "createList" to create a list of accounts
     List<Account> updtAcc=new List<Account>(); //Creating another list of accounts named "updtAcc"
     for(Account acc:accounts)
     {
