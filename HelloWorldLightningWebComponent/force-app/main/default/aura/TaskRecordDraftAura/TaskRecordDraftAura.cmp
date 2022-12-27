@@ -1,0 +1,65 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" 
+                access="global" 
+                controller="AddTaskDetails">
+  <!-- HANDLER -->
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    
+   <!-- ATTRIBUTES -->
+    <aura:attribute name="callpopup" type="boolean" default="false" />
+    <aura:attribute name="meetingpopup" type="boolean" default="false" />
+    <aura:attribute name="task" type="Task" default="{'sObjectType':'Task'}"/>
+    <aura:attribute name="subatt" type="String" default="{'sObjectType':'String'}"/>
+    <aura:attribute name="priatt" type="String" default="{'sObjectType':'String'}"/>
+    <aura:attribute name="statatt" type="String" default="{'sObjectType':'String'}"/>
+    
+    <!-- CALL Button -->
+	<lightning:button label="Call" iconName="utility:call" iconPosition="left"  variant="brand" onclick="{!c.clickCall}"/>
+    
+<!-- =========== If you click Call button =========================================================================== -->
+    <aura:if isTrue="{!v.callpopup}">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_medium">
+<div class="slds-modal__container">
+
+<div class="slds-modal__header">
+<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">New Call</h1>
+</div>
+<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"> 
+        
+    
+    <lightning:select aura:id="subj" name="Subject" label="Subject" required="true" onchange="{!c.dosubject}" >
+        <option value="">None</option>
+        <option value="Call">Call</option>
+        <option value="Email">Email</option>
+        <option value="Send Letter">Send Letter</option>
+        <option value="Send Quote">Send Quote</option>
+        <option value="Other">Other</option>
+    </lightning:select>
+    
+    <lightning:select aura:id="pri" name="Priority" label="Priority" required="true" onchange="{!c.dopriority}" >
+       <option value="">None</option>
+        <option value="High">High</option>
+        <option value="Normal">Normal</option>
+        <option value="Low">Low</option>
+    </lightning:select>
+    
+    <lightning:select aura:id="stat" name="Status" label="Status" required="true" onchange="{!c.dostatus}" >
+        <option value="">None</option>
+        <option value="Not Started">Not Started</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+        <option value="Waiting on someone else">Waiting on someone else</option>
+        <option value="Deferred">Deferred</option>
+    </lightning:select>
+                
+            
+</div>
+<div class="slds-modal__footer">
+<button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.clickCancelCall}">Cancel</button>
+    <button class="slds-button slds-button_neutral" aria-label="Save" onclick="{!c.doSave}">Save</button>
+
+</div>
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</aura:component>

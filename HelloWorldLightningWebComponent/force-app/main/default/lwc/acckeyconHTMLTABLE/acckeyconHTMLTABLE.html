@@ -1,0 +1,34 @@
+<template>
+    <lightning-card>
+        <!-- <table class="table">
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Type</th>
+
+                    <td>{Name}</td>
+                    <td>{Phone}</td>
+                    <td>{Type}</td>
+        </table> -->
+        <div class="slds-box">
+            <table class="slds-box">
+                <thead>
+                  <tr class="slds-box">
+                    
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Type</th>
+                  </tr>
+                </thead>
+                <tbody align="center">
+                    <template for:each={keyconlist} for:item="index">
+                        <tr class="slds-box" key={index.Id}>
+                            <td>{index.Name}</td>
+                            <td>{index.Mobile__c}</td>
+                            <td>{index.Type__c}</td>
+                        </tr>        
+                    </template>
+                </tbody>
+              </table>
+        </div>
+    </lightning-card>
+</template>

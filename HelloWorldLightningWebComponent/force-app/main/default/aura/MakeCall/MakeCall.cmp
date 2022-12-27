@@ -1,0 +1,133 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" 
+                access="global"
+                controller="DraftHandler">
+    <!-- HANDLER -->
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.status}" action="{!c.handleChange}"/>
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+  
+    
+    
+   <!-- ATTRIBUTES -->
+    <aura:attribute name="callpopup" type="boolean" default="false" />
+    <aura:attribute name="message" type="boolean" default="false" />
+    <aura:attribute name="confirmDialogue" type="String" default="{!$Resource.confirmCancel}" />
+    <aura:attribute name="showConfirm" type="boolean" default="false"/>
+    <aura:attribute name="intervalID" type="Integer" />
+    <aura:attribute name="status" type="String" default="open"/>
+    
+    <aura:attribute name="subjdraft" type="String" />
+    <aura:attribute name="commentVal" type="String" />
+    <aura:attribute name="activityDateVal" type="String" />
+    <aura:attribute name="nextActionVal" type="String" />
+    <aura:attribute name="dealPartnerVal" type="String" />
+    
+    
+    <!-- CALL Button -->
+	<lightning:button label="Call" iconName="utility:call" iconPosition="left"  variant="success" onclick="{!c.clickCall}"/>
+    
+<!-- =========== If you click Call button =========================================================================== -->
+    <aura:if isTrue="{!v.callpopup}">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_medium">
+<div class="slds-modal__container">
+<div class="slds-modal__header">
+<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">New Call</h1>
+</div>
+<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"> 
+        
+    <lightning:layout verticalAlign="stretch" multipleRows="true" class="x-large">
+        <lightning:layoutItem flexibility="auto" padding="around-medium" size="6">
+            <div class="custom-box">      
+                <!-- =========== Subject ==================================== -->
+                <lightning:input class="slds-m-vertical_x-small" aura:id="input1" label="Subject" required="true" value="{!v.subjdraft}" onblur="{!c.onBlurSubject}" />
+                <!-- =========== Comments ==================================== -->
+                <lightning:inputRichText class="slds-m-vertical_x-small" aura:id="input2" required="true" value="{!v.commentVal}" onblur="{!c.onBlurComment}"/>
+            </div>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem flexibility="auto" padding="around-medium" size="6">
+            <div class="custom-box">
+                <!-- =========== Activity Date ==================================== -->
+                <lightning:input class="slds-m-vertical_x-small" aura:id="input3"  required="true" value="{!v.activityDateVal}" label="Activity Date" type="date" dateStyle="medium" onblur="{!c.onBlurDate}"/>
+                <!-- =========== Next Action ==================================== -->
+                <lightning:input class="slds-m-vertical_x-small" aura:id="input4"  required="true" value="{!v.nextActionVal}" label="New Action" type="text" onblur="{!c.onBlurAction}"/>
+                <!-- =========== Deal Partner ==================================== -->
+                <lightning:input class="slds-m-vertical_x-small" aura:id="input5"  required="true" value="{!v.dealPartnerVal}" label="Deal Partner" type="text" onblur="{!c.onBlurDeal}" />
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+            
+</div>  
+<div class="slds-modal__footer">
+    <!-- To show a small Message if draft is saved (Not a Toast Message) -->
+    <aura:if isTrue="{!v.message}"> 
+        <div class="slds-clearfix slds-float_left"><strong>( Saved As Draft )</strong></div>
+    </aura:if>
+    <button class="slds-button slds-button_brand" aria-label="Save" onclick="{!c.doSave}">Save</button>
+<button class="slds-button slds-button_brand" aria-label="Cancel and close" onclick="{!c.clickCancelCall}">Cancel</button>
+
+<!-- Confirmation on click of cancel button -->
+<aura:if isTrue="{!v.showConfirm}">
+
+    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left-bottom" role="dialog">
+        <div id="popover-body-id" class="slds-popover__body">
+                <center>{!v.confirmDialogue}</center>
+                <center>
+                    <lightning:button name='No' label='No' onclick='{!c.confirmNo}'/>
+                    <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.confirmYes}'/>
+                </center>
+            </div>        
+        </section>
+                       
+        </aura:if>
+        <!-- Confirmation popup ENDS-->
+
+</div>
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+    
+    <!-- Confirmation on click of cancel button -->
+<aura:if isTrue="{!v.showConfirm}">
+    <!-- <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_medium">
+<div class="slds-modal__container">
+<div class="slds-modal__header">
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                     
+                    <div class="slds-modal__content slds-p-around- -medium">
+                        <center><b>Are you sure you want to Cancel? (Drafts that are save will be deleted)</b></center>
+                    </div>
+                     
+                    <footer class="slds-modal__footer">
+                        <lightning:button name='No' label='No' onclick='{!c.confirmNo}'/>
+                        <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.confirmYes}'/>
+                    </footer>
+                </div>
+            </div>
+    </div>
+</div>
+</section>
+    <div class="slds-backdrop slds-backdrop- -open"></div> 
+<div class="slds-backdrop slds-backdrop_open" role="presentation"></div> -->
+
+<section aria-describedby="dialog-body-id-113" aria-labelledby="dialog-heading-id-118" class="slds-popover slds-nubbin_left" role="dialog">
+    
+    <div class="slds-popover__body" id="dialog-body-id-113">
+    <div class="slds-media">
+    <div class="slds-media__body">
+    <header class="slds-popover__header">
+    <h2 class="slds-text-heading_small" id="dialog-heading-id-118">Header title</h2>
+    </header>
+    <p>Lorem ipsum dolor sit amet ut labore et dolore magna aliqua.</p>
+    </div>
+    </div>
+    </div>
+    </section>
+                       
+        </aura:if>
+        <!-- Confirmation ENDS-->
+	
+</aura:component>

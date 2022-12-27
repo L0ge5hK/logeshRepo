@@ -1,0 +1,4 @@
+<aura:component implements="lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+    <aura:handler name="success" value="{!this}" action="{!c.showSuccessToast}" />
+</aura:component>	

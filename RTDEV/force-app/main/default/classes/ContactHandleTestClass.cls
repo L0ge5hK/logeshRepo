@@ -59,6 +59,7 @@ private class ContactHandleTestClass
         Contact con5= new Contact(LastName='Contact5',AccountId=testacc.Id);
         INSERT con5;
         //Checking if 3 Contacts are deleted (by verifying if only 2 contacts are available)
+
         Integer contactcount=[SELECT COUNT() FROM Contact]; 
         System.assertEquals(2,contactcount,'MAYBE WRONG!');    
     }
