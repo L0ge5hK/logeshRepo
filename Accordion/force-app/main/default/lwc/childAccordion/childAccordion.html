@@ -1,0 +1,11 @@
+<template>
+    <template if:true={recordsfromparent}>
+    <lightning-accordion allow-multiple-sections-open active-section-name="">
+        <template for:each={recordsfromparent} for:item="cc">
+            <lightning-accordion-section key={cc.Id} label={cc.Name}>
+                <c-child-accordion parentid={cc.Id}></c-child-accordion>
+            </lightning-accordion-section>
+        </template>
+    </lightning-accordion>
+    </template>
+</template>

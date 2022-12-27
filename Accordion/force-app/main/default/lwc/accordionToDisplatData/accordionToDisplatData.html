@@ -1,0 +1,20 @@
+<template>
+    <lightning-card>
+
+        <lightning-accordion title="Parent Accordion"
+                                allow-multiple-sections-open
+                                active-section-name=""
+                                onclick={onSelectingThisSection}>
+            <!-- displays accordion depending on number of records -->
+            <template for:each={accrecords} for:item="r">
+                <lightning-accordion-section key={r.Id} 
+                                            label={r.Name} 
+                                            name={r.Id}>
+                                            <c-child-accordion parentid={r.Id}></c-child-accordion>
+                </lightning-accordion-section>
+            </template>
+            <!-- ENDS HERE (displays accordion depending on number of records) -->
+        </lightning-accordion>
+    
+    </lightning-card>
+</template>

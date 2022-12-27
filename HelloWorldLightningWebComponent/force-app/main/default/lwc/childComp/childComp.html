@@ -1,0 +1,14 @@
+<template>
+    <p>
+        Selected Accounts Are :
+    </p>
+    <lightning-pill label={pillvalue} onremove={handleRemove} ></lightning-pill>
+    <lightning-button label="Show Key Contacts" onclick={showKeyContacts}></lightning-button>
+    <template if:false={cover} for:each={keycontactlist} for:item="k">
+        <div key={k.Id}>
+            <p>{keycon.Name}</p>
+            <p>{keycon.Email__c}</p>
+            <p>{keycon.Type__c}</p>
+        </div>
+    </template>
+</template>

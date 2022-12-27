@@ -1,0 +1,23 @@
+<template>  
+    <lightning-card>
+    <lightning-input 
+                    type="search" 
+                    onchange={handleKeyChange} 
+                    class="slds-m-bottom_small" 
+                    label="Search Account" 
+                    value={accountName}>
+    </lightning-input>
+    <template for:each={accountList} for:item="accountObj" for:index="index" if:true={dropdown}>
+        <a key={accountObj.Id} 
+        value={accountObj.Name} 
+        onclick={getAccName} style="display:block; color:black; text-align: center;">
+
+            {accountObj.Name}</a>
+    </template>
+    <template if:true={namecheck}>
+        <div>
+            <p> NameNotDisplaying </p>
+        </div>
+    </template>
+    </lightning-card>
+</template>

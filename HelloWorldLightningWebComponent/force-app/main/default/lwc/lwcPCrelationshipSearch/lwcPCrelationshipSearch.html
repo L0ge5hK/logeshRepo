@@ -1,0 +1,42 @@
+<template>
+<lightning-card class="slds-card">
+    <div  style="font-family: 'Open Sans', sans-serif">
+
+        <!-- Header -->
+        <header class="slds-card__header slds-media slds-media_center">
+            <div class="slds-media__figure">
+                <lightning-icon icon-name="standard:custom_notification" size="small"></lightning-icon>
+            </div>
+            <div class="slds-media__body slds-card__header-title slds-text-title_bold" style="font-size: 14px">
+                Search Account Records Here
+            </div>
+        </header>
+
+        <!-- Body -->
+        <div class="slds-p-around_small">
+            <div class="slds-text-align_center slds-container_center" style="font-size: 15px;">
+                <div class="slds-size_2-of-3 slds-align_absolute-center slds-p-bottom_small">
+                    <c-lwc-example-component
+                            name="accountLookup"
+                            field-label="Account"
+                            child-object-api-name="Contact"
+                            target-field-api-name="AccountId"
+                            value={accountId}
+                            required="false"
+                            add-to-recent="true"
+                            onvalueselected={handleSelectedLookup}
+                    >
+                    </c-lwc-example-component>
+                </div>
+                <p>Id of the selected Account: <span style="font-weight: bold">{accountId}</span></p>
+            </div>
+            <!-- to Display the selected ones (pill) -->
+            <span class="slds-pill slds-pill_link">
+                <p class="slds-pill__action" title="Full pill label verbiage mirrored here">
+                <span class="slds-pill__label">{accountName}</span>
+                </p>
+                </span>
+        </div>
+    </div>
+</lightning-card>
+</template>
